@@ -80,24 +80,6 @@ public class Foe_Detection_Handler : MonoBehaviour {
     }
   }
 
-  bool CanHearPlayer() {
-    if (isDeaf || FindObjectOfType<PlayerController>().isStationary) {
-      return false;
-    } else if (FindObjectOfType<PlayerController>().state == PlayerController.State.sprinting) {
-      if (displacement.magnitude < 15f) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      if (displacement.magnitude < 3f) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  }
-
   void React() {
     if (playerSpotted) {
       PlayerSpotted();

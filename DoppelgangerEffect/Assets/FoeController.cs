@@ -4,7 +4,6 @@ using System.Collections;
 public class FoeController : MonoBehaviour {
   float birth_time;
   int current_step;
-  float TIME_BETWEEN_ORDERS;
 
   LocationState last_loc_state;
   LocationState next_loc_state;
@@ -17,7 +16,6 @@ public class FoeController : MonoBehaviour {
   void Awake() {
     birth_time = Time.time;
     current_step = -1;
-    TIME_BETWEEN_ORDERS = PlayerStateHistory.main.TIME_BETWEEN_RECORDS;
     last_loc_state.pos = transform.position;
     last_loc_state.facing = transform.rotation;
     next_loc_state = PlayerStateHistory.main.state_history[0];
@@ -25,7 +23,7 @@ public class FoeController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-    float r_time = Time.time - birth_time / TIME_BETWEEN_ORDERS;
+    float r_time = Time.time - birth_time / Constants.TIME_BETWEEN_GHOST_RECORDS;
     if (r_time > current_step) {
       current_step++;
       NewLocation (current_step);

@@ -69,6 +69,5 @@ public class PauseScript : MonoBehaviour {
     Time.timeScale = 1;
     GamePaused = false;
     sensitivityValue = (int)sensitivity.value;
-    player.SetLookSensitivity(sensitivityValue);
   }
 }
