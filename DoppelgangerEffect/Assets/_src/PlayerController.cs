@@ -164,16 +164,21 @@ public class PlayerController : MonoBehaviour {
 
   // Rotates the player and camera on a fixed interval
   void Look(float dt) {
-
-    Debug.Log(_worldspace_state.current_rotationX + " " + _worldspace_state.target_rotationX);
+    if (DebugConstants.ENABLE_PLAYER_PHYSICS_MESSAGING) {
+      Debug.Log("Worldspace rotation x (curr, target): " + _worldspace_state.current_rotationX + " " + _worldspace_state.target_rotationX +
+        "\n[DebugConstants.ENABLE_PLAYER_PHYSICS_MESSAGING]");
+    }
     float adjusted_rotation_rate = Constants.PLAYER_ROTATION_RATE * dt;
     _worldspace_state.current_rotationX = Mathf.Lerp (_worldspace_state.current_rotationX,
                                                     _worldspace_state.target_rotationX, adjusted_rotation_rate);
     _worldspace_state.current_rotationY = Mathf.Lerp (_worldspace_state.current_rotationY,
                                                     _worldspace_state.target_rotationY, adjusted_rotation_rate);
     Vector3 current_euler = transform.eulerAngles;
-    Debug.Log("EULER" + transform.eulerAngles + " " + new Vector3(0f, _worldspace_state.current_rotationX - current_euler.x,
-      _worldspace_state.current_rotationY - current_euler.y));
+    if (DebugConstants.ENABLE_PLAYER_PHYSICS_MESSAGING) {
+      Debug.Log ("EULER" + transform.eulerAngles + " " +
+        new Vector3 (0f, _worldspace_state.current_rotationX - current_euler.x, _worldspace_state.current_rotationY - current_euler.y) +
+        "\n[DebugConstants.ENABLE_PLAYER_PHYSICS_MESSAGING]");
+    }
     transform.Rotate(new Vector3(0f, _worldspace_state.current_rotationX - current_euler.x,
                                  _worldspace_state.current_rotationY - current_euler.y));
   }

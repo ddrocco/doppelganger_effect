@@ -35,6 +35,28 @@ public class DebugConstants : MonoBehaviour {
     }
   }
 
+
+  public bool _ENABLE_PRINT_ROOM_DISTANCE_LIST = true;
+  public static bool ENABLE_PRINT_ROOM_DISTANCE_LIST {
+    get {
+      return _main._ENABLE_PRINT_ROOM_DISTANCE_LIST;
+    }
+    set {
+      _main._ENABLE_PRINT_ROOM_DISTANCE_LIST = value;
+    }
+  }
+
+
+  public bool _ENABLE_PLAYER_PHYSICS_MESSAGING = true;
+  public static bool ENABLE_PLAYER_PHYSICS_MESSAGING {
+    get {
+      return _main._ENABLE_PLAYER_PHYSICS_MESSAGING;
+    }
+    set {
+      _main._ENABLE_PLAYER_PHYSICS_MESSAGING = value;
+    }
+  }
+
   public bool _ALLOW_DEBUG_RAYS = true;
   public static bool ALLOW_DEBUG_RAYS {
     get {

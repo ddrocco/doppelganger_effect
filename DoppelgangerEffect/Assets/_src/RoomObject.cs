@@ -16,7 +16,8 @@ public class RoomObject : MonoBehaviour {
     }
   }
   int _id;
-  public HashSet<int> adjacent_rooms;
+
+  public HashSet<int> adjacent_rooms = new HashSet<int>();
 
   public void ColorifyByID() {
     Colorify(Lib.Colorify (id));
