@@ -8,22 +8,8 @@ public class DebugLogging : MonoBehaviour {
     if (!DebugConstants.ALLOW_PRINT_PLAYER_INPUT) {
       return;
     }
-    Debug.Log ("Move: " + input.movement + "\nRotate: " + input.xRotation + ", " + input.yRotation +
+    Debug.Log ("Move: " + input.movement + "\nRotate: " + input.LRRotation + ", " + input.UDRotation +
       "\nInteract: " + input.interact + "\nSprint: " + input.sprint + "\nPause: " + input.trigger_pause);
-  }
-    
-  public static void PrintWorldspaceState(WorldspaceState state) {
-    if (!DebugConstants.ALLOW_PRINT_WORLDSPACE_STATE) {
-      return;
-    }
-    Debug.Log (
-      "Current Position: " + state.current_position +
-      "\nCurrent Movement: " + state.current_movement +
-      "\nTarget Movement: " + state.target_movement +
-      "\nCurrentXAngle: " + state.current_rotationX +
-      "\nTargetXAngle: " + state.target_rotationX +
-      "\nCurrentYAngle: " + state.current_rotationY +
-      "\nTargetYAngle: " + state.target_rotationY);
   }
 
   public static void PrintLocationState(LocationState state) {

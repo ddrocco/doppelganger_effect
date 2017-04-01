@@ -21,9 +21,20 @@ public enum ControlScheme {
 
 public class InputMapper : MonoBehaviour {
 
+  /* Public fields. */
+
+  // For debugging purposes.  The actual input.
+  private static PlayerInput _mapped_input = new PlayerInput();
+  public static PlayerInput MAPPED_INPUT {
+    get {
+      return _mapped_input;
+    }
+  }
+
+  /* Internal fields. */
+
   private ControlScheme control_scheme = ControlScheme.UNKNOWN;
   private InputDevice device;
-  private PlayerController player_controller;
 
   /* Simple Generic Methods */
 
@@ -32,12 +43,10 @@ public class InputMapper : MonoBehaviour {
     if (control_scheme == ControlScheme.UNKNOWN) {
       Debug.LogError ("UNKNOWN CONTROL SCHEME!");
     }
-    player_controller = PlayerController.player;
   }
 
   void Update () {
-    PlayerInput input = ReceiveInputFromDevice ();
-    player_controller.UpdateInput (input);
+    _mapped_input = ReceiveInputFromDevice ();
   }
 
   /* Input Mapping Methods */
@@ -93,8 +102,8 @@ public class InputMapper : MonoBehaviour {
       return_struct.interact = true;
     }
     return_struct.movement = Vector3.zero;
-    return_struct.xRotation = Input.GetAxis("Mouse X") * Constants.PLAYER_ROTATION_RATE * ConfigurableConstants.PLAYER_LOOK_SENSITIVITY;
-    return_struct.yRotation = Input.GetAxis("Mouse Y") * Constants.PLAYER_ROTATION_RATE * ConfigurableConstants.PLAYER_LOOK_SENSITIVITY;
+    return_struct.LRRotation = Input.GetAxis("Mouse X") * Constants.PLAYER_LR_ROTATION_RATE * ConfigurableConstants.PLAYER_LOOK_SENSITIVITY;
+    return_struct.UDRotation = Input.GetAxis("Mouse Y") * Constants.PLAYER_UD_ROTATION_RATE * ConfigurableConstants.PLAYER_LOOK_SENSITIVITY;
     return return_struct;
   }
 
@@ -113,8 +122,8 @@ public class InputMapper : MonoBehaviour {
       return_struct.interact = true;
     }
     return_struct.movement = new Vector3 (device.LeftStickX.Value, 0f, device.LeftStickY.Value);
-    return_struct.xRotation = device.RightStickX.Value;
-    return_struct.yRotation = device.RightStickY.Value;
+    return_struct.LRRotation = device.RightStickX.Value * ConfigurableConstants.PLAYER_LOOK_SENSITIVITY;
+    return_struct.UDRotation = device.RightStickY.Value * ConfigurableConstants.PLAYER_LOOK_SENSITIVITY;
     return return_struct;
   }
 }

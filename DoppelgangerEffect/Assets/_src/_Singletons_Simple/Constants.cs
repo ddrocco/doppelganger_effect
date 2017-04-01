@@ -34,13 +34,23 @@ public class Constants : MonoBehaviour {
     }
   }
 
-  public float _PLAYER_ROTATION_RATE = 0.01f;
-  public static float PLAYER_ROTATION_RATE {
+  public float _PLAYER_LR_ROTATION_RATE = 30f;
+  public static float PLAYER_LR_ROTATION_RATE {
     get {
-      return _main._PLAYER_ROTATION_RATE;
+      return _main._PLAYER_LR_ROTATION_RATE;
     }
     set {
-      _main._PLAYER_ROTATION_RATE = value;
+      _main._PLAYER_LR_ROTATION_RATE = value;
+    }
+  }
+
+  public float _PLAYER_UD_ROTATION_RATE = 30f;
+  public static float PLAYER_UD_ROTATION_RATE {
+    get {
+      return _main._PLAYER_UD_ROTATION_RATE;
+    }
+    set {
+      _main._PLAYER_UD_ROTATION_RATE = value;
     }
   }
 

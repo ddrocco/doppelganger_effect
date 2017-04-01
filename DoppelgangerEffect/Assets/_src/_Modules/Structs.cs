@@ -14,20 +14,26 @@ public struct LocationState {
   public int room_id;
 }
 
-public struct WorldspaceState {
-  public Vector3 current_position;
-  public Vector3 current_movement;
-  public Vector3 target_movement;
-  public float current_rotationX;
-  public float target_rotationX;
-  public float current_rotationY;
-  public float target_rotationY;
+public struct MovementState {
+  public Vector3 movement;
+  public float rotationX;
+  public float rotationY;
+  public MovementState(Vector3 movement, float rotationX, float rotationY) {
+    this.movement = movement;
+    this.rotationX = rotationX;
+    this.rotationY = rotationY;
+  }
+}
+
+public enum MovementType {
+  WALKING,
+  SPRINTING
 }
 
 public struct PlayerInput {
   public Vector3 movement;
-  public float xRotation;
-  public float yRotation;
+  public float LRRotation;
+  public float UDRotation;
   public bool sprint;
   public bool interact;
   public bool trigger_pause;

@@ -12,7 +12,7 @@ public class PauseScript : MonoBehaviour {
   public Text sensitivityValText;
 
   private InputDevice device;
-  private PlayerController player;
+  private PlayerPhysicsController player;
 
   public bool paused {
     get {
@@ -27,7 +27,7 @@ public class PauseScript : MonoBehaviour {
     sensitivity.value = sensitivityValue;
     QPauseMenu.GetComponent<Canvas> ().worldCamera = GameObject.Find ("QCamera").GetComponent<Camera>();
     StanPauseMenu.GetComponent<Canvas> ().worldCamera = GameObject.Find ("PlayerCamera").GetComponent<Camera>();
-    player = FindObjectOfType<PlayerController>();
+    player = FindObjectOfType<PlayerPhysicsController>();
     Resume();
   }
 

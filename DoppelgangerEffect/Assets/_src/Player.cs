@@ -3,20 +3,13 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
   public static Player main;
-  public Rigidbody body;
-  PlayerController controller;
+  PlayerPhysicsController controller;
 
   void InitializeComponents() {
     // Controller
-    controller = GetComponent<PlayerController> ();
+    controller = GetComponent<PlayerPhysicsController> ();
     if (controller == null)
-      controller = gameObject.AddComponent<PlayerController>();
-    // Rigidbody
-    body = GetComponent<Rigidbody>();
-    if (body == null) {
-      body = gameObject.AddComponent<Rigidbody> ();
-    }
-    body.useGravity = false;
+      controller = gameObject.AddComponent<PlayerPhysicsController>();
   }
 
   void Awake() {
