@@ -1,8 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerInputManager : MonoBehaviour {
   public static PlayerInputManager _main;
+
+  static List<PlayerInteractor> _interactors;
+  public static List<PlayerInteractor> INTERACTORS {
+    get {
+      return _interactors;
+    }
+  }
 
   private MovementType _movement_type;
   [HideInInspector]
@@ -31,12 +39,20 @@ public class PlayerInputManager : MonoBehaviour {
     }
   }
 
+  void Awake() {
+    _interactors = new List<PlayerInteractor> ();
+    foreach (PlayerInteractor interactor in FindObjectsOfType<PlayerInteractor>()) {
+      _interactors.Add (interactor);
+    }
+  }
+
   /* 
    * Update-level functions 
   */
 
   void Update() {
     UpdateTargetFromInput (InputMapper.MAPPED_INPUT);
+    GetInteraction (InputMapper.MAPPED_INPUT);
 
     if (DebugConstants.ENABLE_PLAYER_PHYSICS_MESSAGING) {
       string msg = "Movement (curr, target): " + CURRENT_STATE.movement + " " + TARGET_STATE.movement +
@@ -47,7 +63,6 @@ public class PlayerInputManager : MonoBehaviour {
       Debug.Log(msg);
       DebugText.player_target_movement_text = msg;
     }
-
   }
 
   void UpdateTargetFromInput(PlayerInput input) {
@@ -63,6 +78,12 @@ public class PlayerInputManager : MonoBehaviour {
       ConfigurableConstants.PLAYER_LOOK_ANGLE_MIN, ConfigurableConstants.PLAYER_LOOK_ANGLE_MAX);
     new_target_movement_state.rotationY = CURRENT_STATE.rotationY + input.LRRotation;
     _target_state = new_target_movement_state;
+  }
+
+  void GetInteraction(PlayerInput input) {
+    if (input.interact) {
+      INTERACTORS [0].Toggle ();
+    }
   }
 
   /* 

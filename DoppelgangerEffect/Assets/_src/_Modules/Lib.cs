@@ -24,4 +24,12 @@ public class Lib : MonoBehaviour {
     float clamped_adjusted_value = Mathf.Clamp (adjusted_value, min, max);
     return clamped_adjusted_value + 90f * quadrant;
   }
+
+  public static T GetComponentInTree<T>(GameObject game_object) {
+    if (game_object.GetComponent<T> () != null) {
+      return game_object.GetComponent<T> ();
+    } else {
+      return game_object.GetComponentInParent<T> (); 
+    }
+  }
 }

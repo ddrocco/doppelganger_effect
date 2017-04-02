@@ -98,13 +98,35 @@ public class Constants : MonoBehaviour {
   }
 
 
-  public int _ROOM_DETECTION_CULLING_MASK = 1 << 9;
+  public int _ROOM_DETECTION_CULLING_MASK = 1 << 8;
   public static int ROOM_DETECTION_CULLING_MASK {
     get {
       return _main._ROOM_DETECTION_CULLING_MASK;
     }
     set {
       _main._ROOM_DETECTION_CULLING_MASK = value;
+    }
+  }
+
+
+  public int _INTERACTABLE_CULLING_MASK = 1 << 9;
+  public static int INTERACTABLE_CULLING_MASK {
+    get {
+      return _main._INTERACTABLE_CULLING_MASK;
+    }
+    set {
+      _main._INTERACTABLE_CULLING_MASK = value;
+    }
+  }
+
+
+  public float _PLAYER_INTERACTION_DISTANCE = 3f;
+  public static float PLAYER_INTERACTION_DISTANCE {
+    get {
+      return _main._PLAYER_INTERACTION_DISTANCE;
+    }
+    set {
+      _main._PLAYER_INTERACTION_DISTANCE = value;
     }
   }
 
