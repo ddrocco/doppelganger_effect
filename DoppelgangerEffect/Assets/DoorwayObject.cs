@@ -9,7 +9,7 @@ public class DoorwayObject : InteractableObject {
   private Vector3 openRot;
 
 
-  protected new void Start () {
+  protected void Start () {
     defaultRot = transform.eulerAngles;
     openRot = new Vector3(defaultRot.x, defaultRot.y + DoorOpenAngle, defaultRot.z);
   }

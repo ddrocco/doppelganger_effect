@@ -32,4 +32,10 @@ public class Lib : MonoBehaviour {
       return game_object.GetComponentInParent<T> (); 
     }
   }
+
+  public static Vector3 FlattenY(Vector3 input) {
+    float m = input.magnitude;
+    input.y = 0;
+    return input.normalized * m;
+  }
 }

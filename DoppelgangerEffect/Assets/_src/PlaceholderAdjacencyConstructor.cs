@@ -14,8 +14,8 @@ public class PlaceholderAdjacencyConstructor : MonoBehaviour {
   void Update () {
     float yExtents = _coillider.bounds.extents.y;
     float zExtents = _coillider.bounds.extents.z;
-    Vector3 bottom_forward_edge = transform.position - _coillider.bounds.extents.y * transform.up + _coillider.bounds.extents.z * transform.forward;
-    Vector3 bottom_back_edge = transform.position - _coillider.bounds.extents.y * transform.up - _coillider.bounds.extents.z * transform.forward;
+    Vector3 bottom_forward_edge = transform.position - yExtents * transform.up + zExtents * transform.forward;
+    Vector3 bottom_back_edge = transform.position - yExtents * transform.up - zExtents * transform.forward;
     Debug.DrawRay (bottom_forward_edge, -2f * transform.forward, Color.blue);
     Debug.DrawRay (bottom_back_edge, 2f * transform.forward, Color.blue);
   }
@@ -23,8 +23,8 @@ public class PlaceholderAdjacencyConstructor : MonoBehaviour {
   void PlaceholderAdjacencyDetection() {
     float yExtents = _coillider.bounds.extents.y;
     float zExtents = _coillider.bounds.extents.z;
-    Vector3 bottom_forward_edge = transform.position - _coillider.bounds.extents.y * transform.up + _coillider.bounds.extents.z * transform.forward;
-    Vector3 bottom_back_edge = transform.position - _coillider.bounds.extents.y * transform.up - _coillider.bounds.extents.z * transform.forward;
+    Vector3 bottom_forward_edge = transform.position - yExtents * transform.up + zExtents * transform.forward;
+    Vector3 bottom_back_edge = transform.position - yExtents * transform.up - zExtents * transform.forward;
     RaycastHit forward_hit;
     RaycastHit back_hit;
     if (Physics.Raycast (bottom_forward_edge, -transform.forward, out forward_hit, 2f, Constants.ROOM_DETECTION_CULLING_MASK)) {

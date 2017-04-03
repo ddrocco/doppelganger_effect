@@ -92,8 +92,10 @@ public class PlayerInputManager : MonoBehaviour {
 
   // Sets the player's movement direction based on controller left stick input
   // Called in update, so controller input is registered as quickly as possible
-  Vector3 GetMovementVector(Vector3 move_direction) {
-    move_direction = PlayerPhysicsController.RIGIDBODY.transform.TransformDirection(move_direction);
+  Vector3 GetMovementVector(Vector3 raw_move_direction) {
+    Vector3 local_raw_move_direction = PlayerPhysicsController.RIGIDBODY.transform.TransformDirection(raw_move_direction);
+    Vector3 move_direction = Lib.FlattenY (local_raw_move_direction);
+
     //TODO(ddrocco): Fix movement direction to eliminate Y.
 
     if (move_direction != Vector3.zero) {     
