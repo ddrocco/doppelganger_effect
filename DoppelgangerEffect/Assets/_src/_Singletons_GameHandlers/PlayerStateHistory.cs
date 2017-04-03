@@ -14,7 +14,7 @@ public class PlayerStateHistory : MonoBehaviour {
       }
       _current_occupied_room = value;
       if (DebugConstants.ROOM_COLORATION_RULES == DebugConstants.RoomColorationPolicy.DEBUG_BY_DISTANCE_TO_PLAYER) {
-        RoomCollection._main.ColorRooms ();
+        RoomCollection.INSTANCE.ColorRooms ();
       }
     }
   }

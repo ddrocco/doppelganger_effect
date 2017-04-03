@@ -8,7 +8,7 @@ public class PlaceholderAdjacencyConstructor : MonoBehaviour {
 
   void Start () {
     _coillider = GetComponent<BoxCollider> ();
-    PlaceholderAdjacencyDetection ();
+    // PlaceholderAdjacencyDetection ();
 	}
 
   void Update () {
@@ -20,7 +20,7 @@ public class PlaceholderAdjacencyConstructor : MonoBehaviour {
     Debug.DrawRay (bottom_back_edge, 2f * transform.forward, Color.blue);
   }
 
-  void PlaceholderAdjacencyDetection() {
+  public void PlaceholderAdjacencyDetection() {
     float yExtents = _coillider.bounds.extents.y;
     float zExtents = _coillider.bounds.extents.z;
     Vector3 bottom_forward_edge = transform.position - yExtents * transform.up + zExtents * transform.forward;
@@ -35,7 +35,10 @@ public class PlaceholderAdjacencyConstructor : MonoBehaviour {
     }
 
     if (first == null || second == null) {
+      Debug.Log (gameObject.name + " was not adjacent to two rooms.");
       return;
+    } else {
+      Debug.Log (gameObject.name + " registering adjacency between " + first.id + " and " + second.id);
     }
 
     first.adjacent_rooms.Add (second.id);

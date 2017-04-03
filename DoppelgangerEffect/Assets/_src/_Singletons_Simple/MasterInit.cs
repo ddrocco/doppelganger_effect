@@ -26,11 +26,6 @@ public class MasterInit : MonoBehaviour {
 
   public void UpdateSingletons() {
     _main = FindObjectOfType<MasterInit> ();
-    ConfigurableConstants._main = FindObjectOfType<ConfigurableConstants> ();
-    Constants._main = FindObjectOfType<Constants> ();
-    DebugConstants._main = FindObjectOfType<DebugConstants> ();
-    DebugLogging._main = FindObjectOfType<DebugLogging> ();
-    ConfigurableConstants._main = FindObjectOfType<ConfigurableConstants> ();
     PlayerStateHistory._main = FindObjectOfType<PlayerStateHistory> ();
   }
 

@@ -10,7 +10,7 @@ public class DebugConstantsEditor : Editor {
     // DebugConstants debug_constants_script = (DebugConstants)target;
 
     if (GUILayout.Button ("UpdateColors")) {
-      RoomCollection._main.ColorRooms();
+      RoomCollection.INSTANCE.ColorRooms();
     }
   }
 }

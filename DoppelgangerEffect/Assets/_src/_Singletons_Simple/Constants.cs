@@ -2,65 +2,79 @@
 using System.Collections;
 
 public class Constants : MonoBehaviour {
-  public static Constants _main;
+  static Constants _instance;
+  public static Constants INSTANCE {
+    get {
+      if (_instance != null) {
+        return _instance;
+      }
+      _instance = GameObject.FindObjectOfType<Constants> ();
+      if (_instance != null) {
+        return _instance;
+      }
+      MasterInit master_init_instance = GameObject.FindObjectOfType<MasterInit>();
+      _instance = master_init_instance.gameObject.AddComponent<Constants> ();
+      return _instance;
+    }
+  }
 
   public float _PLAYER_WALKSPEED = 1f;
   public static float PLAYER_WALKSPEED {
     get {
-      return _main._PLAYER_WALKSPEED;
+      return INSTANCE._PLAYER_WALKSPEED;
     }
     set {
-      _main._PLAYER_WALKSPEED = value;
+      INSTANCE._PLAYER_WALKSPEED = value;
     }
   }
 
   public float _PLAYER_RUNSPEED = 2f;
   public static float PLAYER_RUNSPEED {
     get {
-      return _main._PLAYER_RUNSPEED;
+      return INSTANCE._PLAYER_RUNSPEED;
     }
     set {
-      _main._PLAYER_RUNSPEED = value;
+      INSTANCE._PLAYER_RUNSPEED = value;
     }
   }
 
   public float _PLAYER_ACCELERATION_RATE = 1f;
   public static float PLAYER_ACCELERATION_RATE {
     get {
-      return _main._PLAYER_ACCELERATION_RATE;
+      return INSTANCE._PLAYER_ACCELERATION_RATE;
     }
     set {
-      _main._PLAYER_ACCELERATION_RATE = value;
+      INSTANCE._PLAYER_ACCELERATION_RATE = value;
     }
   }
 
   public float _PLAYER_LR_ROTATION_RATE = 30f;
   public static float PLAYER_LR_ROTATION_RATE {
     get {
-      return _main._PLAYER_LR_ROTATION_RATE;
+      return INSTANCE._PLAYER_LR_ROTATION_RATE;
     }
     set {
-      _main._PLAYER_LR_ROTATION_RATE = value;
+      INSTANCE._PLAYER_LR_ROTATION_RATE = value;
     }
   }
 
   public float _PLAYER_UD_ROTATION_RATE = 30f;
   public static float PLAYER_UD_ROTATION_RATE {
     get {
-      return _main._PLAYER_UD_ROTATION_RATE;
+      return INSTANCE._PLAYER_UD_ROTATION_RATE;
     }
     set {
-      _main._PLAYER_UD_ROTATION_RATE = value;
+      INSTANCE._PLAYER_UD_ROTATION_RATE = value;
     }
   }
 
   public float _TIME_BETWEEN_GHOST_RECORDS = 0.1f;
   public static float TIME_BETWEEN_GHOST_RECORDS {
     get {
-      return _main._TIME_BETWEEN_GHOST_RECORDS;
+      return INSTANCE._TIME_BETWEEN_GHOST_RECORDS;
     }
     set {
-      _main._TIME_BETWEEN_GHOST_RECORDS = value;
+      INSTANCE._TIME_BETWEEN_GHOST_RECORDS = value;
     }
   }
 
@@ -68,10 +82,10 @@ public class Constants : MonoBehaviour {
   public float _TIME_BETWEEN_GHOST_SPAWNS = 30f;
   public static float TIME_BETWEEN_GHOST_SPAWNS {
     get {
-      return _main._TIME_BETWEEN_GHOST_SPAWNS;
+      return INSTANCE._TIME_BETWEEN_GHOST_SPAWNS;
     }
     set {
-      _main._TIME_BETWEEN_GHOST_SPAWNS = value;
+      INSTANCE._TIME_BETWEEN_GHOST_SPAWNS = value;
     }
   }
 
@@ -79,10 +93,10 @@ public class Constants : MonoBehaviour {
   public int _ROOM_DISTANCE_TO_SLEEP = 3;
   public static int ROOM_DISTANCE_TO_SLEEP {
     get {
-      return _main._ROOM_DISTANCE_TO_SLEEP;
+      return INSTANCE._ROOM_DISTANCE_TO_SLEEP;
     }
     set {
-      _main._ROOM_DISTANCE_TO_SLEEP = value;
+      INSTANCE._ROOM_DISTANCE_TO_SLEEP = value;
     }
   }
 
@@ -90,10 +104,10 @@ public class Constants : MonoBehaviour {
   public float _ROOM_DETECTION_RAYCAST_DISTANCE = 5f;
   public static float ROOM_DETECTION_RAYCAST_DISTANCE {
     get {
-      return _main._ROOM_DETECTION_RAYCAST_DISTANCE;
+      return INSTANCE._ROOM_DETECTION_RAYCAST_DISTANCE;
     }
     set {
-      _main._ROOM_DETECTION_RAYCAST_DISTANCE = value;
+      INSTANCE._ROOM_DETECTION_RAYCAST_DISTANCE = value;
     }
   }
 
@@ -101,10 +115,10 @@ public class Constants : MonoBehaviour {
   public int _ROOM_DETECTION_CULLING_MASK = 1 << 8;
   public static int ROOM_DETECTION_CULLING_MASK {
     get {
-      return _main._ROOM_DETECTION_CULLING_MASK;
+      return INSTANCE._ROOM_DETECTION_CULLING_MASK;
     }
     set {
-      _main._ROOM_DETECTION_CULLING_MASK = value;
+      INSTANCE._ROOM_DETECTION_CULLING_MASK = value;
     }
   }
 
@@ -112,10 +126,10 @@ public class Constants : MonoBehaviour {
   public int _INTERACTABLE_CULLING_MASK = 1 << 9;
   public static int INTERACTABLE_CULLING_MASK {
     get {
-      return _main._INTERACTABLE_CULLING_MASK;
+      return INSTANCE._INTERACTABLE_CULLING_MASK;
     }
     set {
-      _main._INTERACTABLE_CULLING_MASK = value;
+      INSTANCE._INTERACTABLE_CULLING_MASK = value;
     }
   }
 
@@ -123,14 +137,10 @@ public class Constants : MonoBehaviour {
   public float _PLAYER_INTERACTION_DISTANCE = 3f;
   public static float PLAYER_INTERACTION_DISTANCE {
     get {
-      return _main._PLAYER_INTERACTION_DISTANCE;
+      return INSTANCE._PLAYER_INTERACTION_DISTANCE;
     }
     set {
-      _main._PLAYER_INTERACTION_DISTANCE = value;
+      INSTANCE._PLAYER_INTERACTION_DISTANCE = value;
     }
   }
-
-	void Awake() {
-    _main = this;
-	}
 }

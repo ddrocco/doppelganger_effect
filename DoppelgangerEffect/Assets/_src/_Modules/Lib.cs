@@ -38,4 +38,11 @@ public class Lib : MonoBehaviour {
     input.y = 0;
     return input.normalized * m;
   }
+
+  public static void DestroyChildrenAndSelf(Transform transform) {
+    foreach (Transform child_transform in transform) {
+      DestroyChildrenAndSelf (child_transform);
+    }
+    GameObject.DestroyImmediate (transform.gameObject);
+  }
 }

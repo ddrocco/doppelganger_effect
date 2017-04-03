@@ -2,33 +2,47 @@
 using System.Collections;
 
 public class ConfigurableConstants : MonoBehaviour {
-  public static ConfigurableConstants _main;
+  static ConfigurableConstants _instance;
+  public static ConfigurableConstants INSTANCE {
+    get {
+      if (_instance != null) {
+        return _instance;
+      }
+      _instance = GameObject.FindObjectOfType<ConfigurableConstants> ();
+      if (_instance != null) {
+        return _instance;
+      }
+      MasterInit master_init_instance = GameObject.FindObjectOfType<MasterInit>();
+      _instance = master_init_instance.gameObject.AddComponent<ConfigurableConstants> ();
+      return _instance;
+    }
+  }
 
   public float _PLAYER_LOOK_SENSITIVITY = 1f;
   public static float PLAYER_LOOK_SENSITIVITY {
     get {
-      return _main._PLAYER_LOOK_SENSITIVITY;
+      return INSTANCE._PLAYER_LOOK_SENSITIVITY;
     }
     set {
-      _main._PLAYER_LOOK_SENSITIVITY = value;
+      INSTANCE._PLAYER_LOOK_SENSITIVITY = value;
     }
   }
 
   public float _PLAYER_LOOK_ANGLE_MAX = 60f;
   public static float PLAYER_LOOK_ANGLE_MAX {
     get {
-      return _main._PLAYER_LOOK_ANGLE_MAX;
+      return INSTANCE._PLAYER_LOOK_ANGLE_MAX;
     }
     set {
-      _main._PLAYER_LOOK_ANGLE_MAX = value;
+      INSTANCE._PLAYER_LOOK_ANGLE_MAX = value;
     }
   }
   public static float PLAYER_LOOK_ANGLE_MIN {
     get {
-      return -_main._PLAYER_LOOK_ANGLE_MAX;
+      return -INSTANCE._PLAYER_LOOK_ANGLE_MAX;
     }
     set {
-      _main._PLAYER_LOOK_ANGLE_MAX = -value;
+      INSTANCE._PLAYER_LOOK_ANGLE_MAX = -value;
     }
   }
 
@@ -61,9 +75,5 @@ public class ConfigurableConstants : MonoBehaviour {
   }
   public void ToggleShowMouse() {
     MOUSE_HIDE_ENABLED = !MOUSE_HIDE_ENABLED;
-  }
-
-  void Awake() {
-    _main = this;
   }
 }

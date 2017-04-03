@@ -15,7 +15,20 @@ public class RoomObject : MonoBehaviour {
       }
     }
   }
-  int _id;
+  public int _id;
+
+  Color _color;
+  public Color COLOR {
+    get {
+      return _color;
+    }
+    set { 
+      _color = value;
+      UpdateColorInRenderers();
+    }
+  }
+
+  
 
   public HashSet<int> adjacent_rooms = new HashSet<int>();
 
@@ -24,9 +37,21 @@ public class RoomObject : MonoBehaviour {
   }
 
   public void Colorify(Color color) {
-    foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) {
-      renderer.material.color = color;
+    COLOR = color;
+  }
+
+  /* PRIVATE METHODS */
+
+  void UpdateColorInRenderers() {
+    if (Application.isPlaying) {
+      foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) {
+        renderer.material.color = COLOR;
+      }
     }
+  }
+
+  void Start() {
+    UpdateColorInRenderers();
   }
 
   /* DEBUG UTILITY */

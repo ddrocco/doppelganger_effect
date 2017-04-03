@@ -4,6 +4,8 @@ using System.IO;
 
 
 public class Parser {
+  public readonly static string BLUEPRINTS_FULL_PATH = "Assets/Resources/RoomGenerators/";
+  public readonly static string BLUEPRINTS_SHORT_PATH = "RoomGenerators/";
   public readonly static string ROOM_GENERATOR_PATH = "";
 
   public static string LoadResourceTextfile(string path_prefix, string filename) {

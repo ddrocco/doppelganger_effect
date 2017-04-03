@@ -2,25 +2,39 @@
 using System.Collections;
 
 public class DebugConstants : MonoBehaviour {
-  public static DebugConstants _main;
+  static DebugConstants _instance;
+  public static DebugConstants INSTANCE {
+    get {
+      if (_instance != null) {
+        return _instance;
+      }
+      _instance = GameObject.FindObjectOfType<DebugConstants> ();
+      if (_instance != null) {
+        return _instance;
+      }
+      MasterInit master_init_instance = GameObject.FindObjectOfType<MasterInit>();
+      _instance = master_init_instance.gameObject.AddComponent<DebugConstants> ();
+      return _instance;
+    }
+  }
 
   public bool _ALLOW_PRINT_PLAYER_INPUT = true;
   public static bool ALLOW_PRINT_PLAYER_INPUT {
     get {
-      return _main._ALLOW_PRINT_PLAYER_INPUT;
+      return INSTANCE._ALLOW_PRINT_PLAYER_INPUT;
     }
     set {
-      _main._ALLOW_PRINT_PLAYER_INPUT = value;
+      INSTANCE._ALLOW_PRINT_PLAYER_INPUT = value;
     }
   }
 
   public bool _ALLOW_PRINT_WORLDSPACE_STATE = true;
   public static bool ALLOW_PRINT_WORLDSPACE_STATE {
     get {
-      return _main._ALLOW_PRINT_WORLDSPACE_STATE;
+      return INSTANCE._ALLOW_PRINT_WORLDSPACE_STATE;
     }
     set {
-      _main._ALLOW_PRINT_WORLDSPACE_STATE = value;
+      INSTANCE._ALLOW_PRINT_WORLDSPACE_STATE = value;
     }
   }
 
@@ -28,10 +42,10 @@ public class DebugConstants : MonoBehaviour {
   public bool _ALLOW_PRINT_LOCATION_STATE = true;
   public static bool ALLOW_PRINT_LOCATION_STATE {
     get {
-      return _main._ALLOW_PRINT_LOCATION_STATE;
+      return INSTANCE._ALLOW_PRINT_LOCATION_STATE;
     }
     set {
-      _main._ALLOW_PRINT_LOCATION_STATE = value;
+      INSTANCE._ALLOW_PRINT_LOCATION_STATE = value;
     }
   }
 
@@ -39,10 +53,10 @@ public class DebugConstants : MonoBehaviour {
   public bool _ENABLE_PRINT_ROOM_DISTANCE_LIST = true;
   public static bool ENABLE_PRINT_ROOM_DISTANCE_LIST {
     get {
-      return _main._ENABLE_PRINT_ROOM_DISTANCE_LIST;
+      return INSTANCE._ENABLE_PRINT_ROOM_DISTANCE_LIST;
     }
     set {
-      _main._ENABLE_PRINT_ROOM_DISTANCE_LIST = value;
+      INSTANCE._ENABLE_PRINT_ROOM_DISTANCE_LIST = value;
     }
   }
 
@@ -50,20 +64,20 @@ public class DebugConstants : MonoBehaviour {
   public bool _ENABLE_PLAYER_PHYSICS_MESSAGING = true;
   public static bool ENABLE_PLAYER_PHYSICS_MESSAGING {
     get {
-      return _main._ENABLE_PLAYER_PHYSICS_MESSAGING;
+      return INSTANCE._ENABLE_PLAYER_PHYSICS_MESSAGING;
     }
     set {
-      _main._ENABLE_PLAYER_PHYSICS_MESSAGING = value;
+      INSTANCE._ENABLE_PLAYER_PHYSICS_MESSAGING = value;
     }
   }
 
   public bool _ALLOW_DEBUG_RAYS = true;
   public static bool ALLOW_DEBUG_RAYS {
     get {
-      return _main._ALLOW_DEBUG_RAYS;
+      return INSTANCE._ALLOW_DEBUG_RAYS;
     }
     set {
-      _main._ALLOW_DEBUG_RAYS = value;
+      INSTANCE._ALLOW_DEBUG_RAYS = value;
     }
   }
 
@@ -76,15 +90,11 @@ public class DebugConstants : MonoBehaviour {
   public RoomColorationPolicy _ROOM_COLORATION_RULES = RoomColorationPolicy.REGULAR;
   public static RoomColorationPolicy ROOM_COLORATION_RULES {
     get {
-      return _main._ROOM_COLORATION_RULES;
+      return INSTANCE._ROOM_COLORATION_RULES;
     }
     set {
-      _main._ROOM_COLORATION_RULES = value;
-      RoomCollection._main.ColorRooms ();
+      INSTANCE._ROOM_COLORATION_RULES = value;
+      RoomCollection.INSTANCE.ColorRooms ();
     }
-  }
-
-  void Awake() {
-    _main = this;
   }
 }

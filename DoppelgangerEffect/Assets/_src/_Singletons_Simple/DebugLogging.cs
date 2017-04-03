@@ -2,7 +2,21 @@
 using System.Collections;
 
 public class DebugLogging : MonoBehaviour {
-  public static DebugLogging _main;
+  static DebugLogging _instance;
+  public static DebugLogging INSTANCE {
+    get {
+      if (_instance != null) {
+        return _instance;
+      }
+      _instance = GameObject.FindObjectOfType<DebugLogging> ();
+      if (_instance != null) {
+        return _instance;
+      }
+      MasterInit master_init_instance = GameObject.FindObjectOfType<MasterInit>();
+      _instance = master_init_instance.gameObject.AddComponent<DebugLogging> ();
+      return _instance;
+    }
+  }
 
   public static void PrintPlayerInput(PlayerInput input) {
     if (!DebugConstants.ALLOW_PRINT_PLAYER_INPUT) {
@@ -27,9 +41,5 @@ public class DebugLogging : MonoBehaviour {
       return;
     }
     Debug.DrawRay (position, direction);
-  }
-
-  void Awake() {
-    _main = this;
   }
 }

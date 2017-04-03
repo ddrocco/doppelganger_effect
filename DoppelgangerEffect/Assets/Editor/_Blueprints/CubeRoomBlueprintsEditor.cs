@@ -10,7 +10,7 @@ public class CubeRoomBlueprintsEditor : Editor {
 
     CubeRoomBlueprints blueprints_script = (CubeRoomBlueprints)target;
 
-    string create_room_button_text = "Create new room at index " + blueprints_script.rooms.Count.ToString();
+    string create_room_button_text = "Create new room at index " + blueprints_script.contents.rooms.Count.ToString();
     if (GUILayout.Button (create_room_button_text)) {
       blueprints_script.CreateRoom ();
     }
@@ -32,9 +32,22 @@ public class CubeRoomBlueprintsEditor : Editor {
     }
       
     string remove_floor_tile_text = "Remove floor tile at index "
-      + blueprints_script.room_index.ToString() + " from Room " + blueprints_script.room_index.ToString();
+      + blueprints_script.room_index.ToString() + " from Room " + blueprints_script.floor_tile_index.ToString();
     if (GUILayout.Button (remove_floor_tile_text)) {
       blueprints_script.RemoveFloorTileFromRoom (blueprints_script.room_index, blueprints_script.floor_tile_index);
+    }
+
+    string add_door_text = "Add Door ( "
+                           + blueprints_script.new_floor_tile_position.x.ToString () + ", "
+                           + blueprints_script.new_floor_tile_position.y.ToString () + "): "
+                           + blueprints_script.new_door_facing.ToString () + ".";
+    if (GUILayout.Button (add_door_text)) {
+      blueprints_script.AddDoor (blueprints_script.new_floor_tile_position, blueprints_script.new_door_facing);
+    }
+
+    string remove_door_text = "Remove door at index " + blueprints_script.room_index.ToString() + ".";
+    if (GUILayout.Button (remove_door_text)) {
+      blueprints_script.RemoveDoor (blueprints_script.room_index);
     }
   }
 }
