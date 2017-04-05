@@ -143,4 +143,46 @@ public class Constants : MonoBehaviour {
       INSTANCE._PLAYER_INTERACTION_DISTANCE = value;
     }
   }
+
+
+  public float _PLAYER_FLOOR_DETECTION_DISTANCE = 3f;
+  public static float PLAYER_FLOOR_DETECTION_DISTANCE {
+    get {
+      return INSTANCE._PLAYER_FLOOR_DETECTION_DISTANCE;
+    }
+    set {
+      INSTANCE._PLAYER_FLOOR_DETECTION_DISTANCE = value;
+    }
+  }
+
+
+  public float _PLAYER_FLOAT_HEIGHT = 1.5f;
+  public static float PLAYER_FLOAT_HEIGHT {
+    get {
+      return INSTANCE._PLAYER_FLOAT_HEIGHT;
+    }
+    set {
+      INSTANCE._PLAYER_FLOAT_HEIGHT = value;
+    }
+  }
+
+  public float _PLAYER_HEIGHT_ACCELERATION = 5f;
+  public static float PLAYER_HEIGHT_ACCELERATION {
+    get {
+      return INSTANCE._PLAYER_HEIGHT_ACCELERATION;
+    }
+    set {
+      INSTANCE._PLAYER_HEIGHT_ACCELERATION = value;
+    }
+  }
+
+  public float _PLAYER_STAIR_HEIGHT_BIAS_WEIGHT = 5f;
+  public static float PLAYER_STAIR_HEIGHT_BIAS_WEIGHT {
+    get {
+      return INSTANCE._PLAYER_STAIR_HEIGHT_BIAS_WEIGHT;
+    }
+    set {
+      INSTANCE._PLAYER_STAIR_HEIGHT_BIAS_WEIGHT = value;
+    }
+  }
 }

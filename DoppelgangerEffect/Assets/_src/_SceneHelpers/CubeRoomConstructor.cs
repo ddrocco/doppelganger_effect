@@ -19,6 +19,27 @@ public class CubeRoomConstructor : Constructor {
   }
 
   public override void Construct() {
+    ConstructRooms ();
+    ConstructDoors ();
+    RoomCollection.INSTANCE.UpdateRooms ();
+  }
+
+  public override void SaveBlueprint() {
+    string blueprint_json = JsonUtility.ToJson (blueprints.contents);
+    Parser.SaveResourceTextfile (blueprint_json, Parser.BLUEPRINTS_FULL_PATH, FULL_FILENAME + ".json");
+    Debug.Log ("Saved blueprints to " + Parser.BLUEPRINTS_FULL_PATH + FULL_FILENAME + ".json");
+    Debug.Log ("Saved: \n" + blueprint_json);
+  }
+
+  /* Private methods */
+
+  void Start() {
+    if (RoomCollection.ROOMS.Count == 0) {
+      Construct ();
+    }
+  }
+
+  void ConstructRooms() {
     RoomCollection.INSTANCE.DestroyAllRooms ();
     int i = 0;
     foreach (CubeRoom room in blueprints.contents.rooms) {
@@ -40,20 +61,42 @@ public class CubeRoomConstructor : Constructor {
       }
       ++i;
     }
+    Debug.Log ("Constructed " + i.ToString() + " rooms from blueprints.");
     RoomCollection.INSTANCE.UpdateRooms ();
-    Debug.Log ("Constructed room from blueprints");
   }
 
-  public override void SaveBlueprint() {
-    string blueprint_json = JsonUtility.ToJson (blueprints.contents);
-    Parser.SaveResourceTextfile (blueprint_json, Parser.BLUEPRINTS_FULL_PATH, FULL_FILENAME + ".json");
-    Debug.Log ("Saved blueprints to " + Parser.BLUEPRINTS_FULL_PATH + FULL_FILENAME + ".json");
-    Debug.Log ("Saved: \n" + blueprint_json);
-  }
-
-  void Start() {
-    if (RoomCollection.ROOMS.Count == 0) {
-      Construct ();
+  void ConstructDoors() {
+    foreach (DoorwayObject door in FindObjectsOfType<DoorwayObject>()) {
+      Lib.DestroyChildrenAndSelf (door.transform);
     }
+
+    int i = 0;
+    foreach (DoorwayPosition door in blueprints.contents.doors) {
+      GameObject door_gameobj = GameObject.Instantiate (BuildingPrefabs.DOORWAY);
+
+      Vector3 rotation_euler = door_gameobj.transform.eulerAngles;
+      switch (door.open_dir) {
+      case Direction.NORTH:
+        rotation_euler.y = 0f;
+        break;
+      case Direction.WEST:
+        rotation_euler.y = 90f;
+        break;
+      case Direction.SOUTH:
+        rotation_euler.y = 180f;
+        break;
+      case Direction.EAST:
+        rotation_euler.y = 270f;
+        break;
+      }
+      door_gameobj.transform.eulerAngles = rotation_euler;
+
+      door_gameobj.transform.position = new Vector3 (door.position.x, 0.5f, door.position.y);
+
+      door_gameobj.transform.SetParent (RoomCollection.INSTANCE.transform);
+      door_gameobj.name = "Door_UNSET_" + i.ToString ();
+      ++i;
+    }
+    Debug.Log ("Constructed " + i.ToString() + " doors from blueprints.");
   }
 }

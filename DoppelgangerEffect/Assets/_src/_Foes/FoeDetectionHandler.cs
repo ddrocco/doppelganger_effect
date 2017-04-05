@@ -41,20 +41,20 @@ public class Foe_Detection_Handler : MonoBehaviour {
   }
 
   void Update () {
-    displacement = PlayerPhysicsController.player.transform.position - transform.position;
+    displacement = PlayerPhysicsController.INSTANCE.transform.position - transform.position;
     CalculateVisualDetection();
     React();
   }
 
   void CalculateVisualDetection() {
-    if (Vector3.Distance(PlayerPhysicsController.player.transform.position, transform.position) < 21f) {
+    if (Vector3.Distance(PlayerPhysicsController.INSTANCE.transform.position, transform.position) < 21f) {
       myCam.enabled = true;
       Plane[] planes = GeometryUtility.CalculateFrustumPlanes(myCam);
       myCam.enabled = false;
       bool detected;
-      if (GeometryUtility.TestPlanesAABB(planes, PlayerPhysicsController.player.GetComponent<Collider>().bounds)) {
+      if (GeometryUtility.TestPlanesAABB(planes, PlayerPhysicsController.INSTANCE.GetComponent<Collider>().bounds)) {
         RaycastHit hit;
-        Vector3 heading = PlayerPhysicsController.player.transform.position - transform.position;
+        Vector3 heading = PlayerPhysicsController.INSTANCE.transform.position - transform.position;
         float distance = heading.magnitude;
         Vector3 direction = heading.normalized;
         if (Physics.Raycast(transform.position, direction, out hit, distance, cullingMask)) {

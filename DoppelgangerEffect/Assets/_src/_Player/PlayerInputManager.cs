@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerInputManager : MonoBehaviour {
-  public static PlayerInputManager _main;
+  public static PlayerInputManager INSTANCE;
 
   static List<PlayerInteractor> _interactors;
   public static List<PlayerInteractor> INTERACTORS {
@@ -114,10 +114,8 @@ public class PlayerInputManager : MonoBehaviour {
       // Multiply the normalized direction vector by the modified length
       move_direction = move_direction * directionLength;
       return move_direction;
-    }
-    else {
-      if (movement_type == MovementType.SPRINTING)
-        movement_type = MovementType.WALKING;
+    } else if (movement_type == MovementType.SPRINTING) {
+      movement_type = MovementType.WALKING;
     }
     return Vector3.zero;
   }

@@ -2,16 +2,19 @@
 using System.Collections;
 
 public class PlaceholderAdjacencyConstructor : MonoBehaviour {
-  protected BoxCollider _coillider;
+  protected BoxCollider _coillider {
+    get {
+      return GetComponent<BoxCollider> ();
+    }
+  }
   public RoomObject first;
   public RoomObject second;
 
-  void Start () {
-    _coillider = GetComponent<BoxCollider> ();
-    // PlaceholderAdjacencyDetection ();
-	}
-
   void Update () {
+    DebugDrawAdjacencyDetectors ();
+  }
+
+  public void DebugDrawAdjacencyDetectors () {
     float yExtents = _coillider.bounds.extents.y;
     float zExtents = _coillider.bounds.extents.z;
     Vector3 bottom_forward_edge = transform.position - yExtents * transform.up + zExtents * transform.forward;
@@ -21,6 +24,7 @@ public class PlaceholderAdjacencyConstructor : MonoBehaviour {
   }
 
   public void PlaceholderAdjacencyDetection() {
+    DebugDrawAdjacencyDetectors ();
     float yExtents = _coillider.bounds.extents.y;
     float zExtents = _coillider.bounds.extents.z;
     Vector3 bottom_forward_edge = transform.position - yExtents * transform.up + zExtents * transform.forward;
@@ -35,16 +39,12 @@ public class PlaceholderAdjacencyConstructor : MonoBehaviour {
     }
 
     if (first == null || second == null) {
-      Debug.Log (gameObject.name + " was not adjacent to two rooms.");
       return;
     } else {
-      Debug.Log (gameObject.name + " registering adjacency between " + first.id + " and " + second.id);
+      transform.parent.gameObject.name = "Doorway_" + first.id.ToString() + "-" + second.id.ToString();
     }
 
     first.adjacent_rooms.Add (second.id);
     second.adjacent_rooms.Add (first.id);
-    if (DebugConstants.ENABLE_PRINT_ROOM_DISTANCE_LIST) {
-      Debug.Log ("[DebugConstants.ENABLE_PRINT_ROOM_DISTANCE_LIST] ADJ: " + first.adjacent_rooms.Count + ", " + second.adjacent_rooms.Count);
-    }
   }
 }

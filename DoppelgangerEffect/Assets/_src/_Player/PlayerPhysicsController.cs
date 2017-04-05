@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 
 public class PlayerPhysicsController : MonoBehaviour {
-  public static PlayerPhysicsController player;
+  public static PlayerPhysicsController INSTANCE;
 
   private MovementState current_movement_state;
 
@@ -41,7 +41,7 @@ public class PlayerPhysicsController : MonoBehaviour {
    */
 
   void Awake() {
-    player = this;
+    INSTANCE = this;
     cam = Camera.main.gameObject;
     if (cam == null)
       cam = Instantiate(camPrefab, transform.position, Quaternion.identity) as GameObject;
@@ -61,6 +61,7 @@ public class PlayerPhysicsController : MonoBehaviour {
     float dt = Time.fixedDeltaTime;
     Move(dt);
     Look(dt);
+    AdjustHeight (dt);
   }
 
   // Moves the player on a fixed interval
@@ -87,6 +88,10 @@ public class PlayerPhysicsController : MonoBehaviour {
     _delta_state.rotationX = new_rotation_x - PlayerInputManager.CURRENT_STATE.rotationX;
     _delta_state.rotationY = new_rotation_y - PlayerInputManager.CURRENT_STATE.rotationY;
     transform.rotation = Quaternion.Euler(new Vector3(new_rotation_x, new_rotation_y, 0f));
+  }
+
+  void AdjustHeight(float dt) {
+    transform.position += PlayerHeightHandler.PLAYER_TARGET_HEIGHT_ADJUSTMENT * Constants.PLAYER_HEIGHT_ACCELERATION * dt * Vector3.up;
   }
 
   // Presently unused.
