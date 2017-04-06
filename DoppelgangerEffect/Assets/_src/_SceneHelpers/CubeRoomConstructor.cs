@@ -91,7 +91,7 @@ public class CubeRoomConstructor : Constructor {
       }
       door_gameobj.transform.eulerAngles = rotation_euler;
 
-      door_gameobj.transform.position = new Vector3 (door.position.x, 0.5f, door.position.y);
+      door_gameobj.transform.position = new Vector3 (door.position.x, 0.9f, door.position.y);
 
       door_gameobj.transform.SetParent (RoomCollection.INSTANCE.transform);
       door_gameobj.name = "Door_UNSET_" + i.ToString ();

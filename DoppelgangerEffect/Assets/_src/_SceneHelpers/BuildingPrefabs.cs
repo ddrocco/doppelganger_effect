@@ -47,4 +47,14 @@ public class BuildingPrefabs : MonoBehaviour {
       INSTANCE._EmptyObject = value;
     }
   }
+
+  public GameObject _GhostPrefab;
+  public static GameObject GHOST_PREFAB {
+    get {
+      return INSTANCE._GhostPrefab;
+    }
+    set {
+      INSTANCE._GhostPrefab = value;
+    }
+  }
 }

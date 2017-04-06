@@ -8,6 +8,11 @@ public enum Direction {
   SOUTH,
   WEST,
 };
+  
+public enum RoomActivityState {
+  ACTIVE,
+  SLEEPING
+};
 
 public struct LocationState {
   public Vector3 pos;

@@ -49,7 +49,12 @@ public class RoomCollection : MonoBehaviour {
     _rooms = new List<RoomObject> ();
   }
 
-  List<int[]> room_distance_chart;
+  List<int[]> _room_distance_chart;
+  public static int[][] ROOM_DISTANCE_CHART {
+    get {
+      return INSTANCE._room_distance_chart.ToArray ();
+    }
+  }
   HashSet<int> rooms_to_update;
 
   public void ColorRooms() {
@@ -60,14 +65,14 @@ public class RoomCollection : MonoBehaviour {
       }
       break;
     case DebugConstants.RoomColorationPolicy.DEBUG_BY_DISTANCE_TO_PLAYER:
-      int player_id = PlayerStateHistory.current_occupied_room;
+      int player_id = Player.CURRENT_OCCUPIED_ROOM;
       if (player_id == -1) {
         foreach (RoomObject room in ROOMS) {
           room.Colorify (Color.black);
         }
       } else {
         foreach (RoomObject room in ROOMS) {
-          int distance = room_distance_chart [room.id] [player_id];
+          int distance = _room_distance_chart [room.id] [player_id];
           if (distance == 0) {
             room.Colorify (Color.white);
           } else if (distance < Constants.ROOM_DISTANCE_TO_SLEEP) {
@@ -134,9 +139,9 @@ public class RoomCollection : MonoBehaviour {
   }
 
   void CalculateRoomDistances() {
-    room_distance_chart = new List<int[]> ();
+    _room_distance_chart = new List<int[]> ();
     for (int i = 0; i < ROOMS.Count; ++i) {
-      room_distance_chart.Add(Enumerable.Repeat<int>(-1, ROOMS.Count).ToArray());
+      _room_distance_chart.Add(Enumerable.Repeat<int>(-1, ROOMS.Count).ToArray());
     }
     // Calculate distances for each node.
     for (int i = 0; i < ROOMS.Count; ++i) {
@@ -147,7 +152,7 @@ public class RoomCollection : MonoBehaviour {
       // BFS for each node.
       while (next_visits.Count > 0) {
         GraphQueueEntry current_node = next_visits.Dequeue();
-        room_distance_chart [i] [current_node.id] = current_node.distance;
+        _room_distance_chart [i] [current_node.id] = current_node.distance;
         foreach (int j in ROOMS[current_node.id].adjacent_rooms) {
           if (visited.Contains (j)) {
             continue;
@@ -159,7 +164,7 @@ public class RoomCollection : MonoBehaviour {
       if (DebugConstants.ENABLE_PRINT_ROOM_DISTANCE_LIST) {
         string debug_message = "ID " + i.ToString () + " Room Distances: [";
         for (int j = 0; j < ROOMS.Count; ++j) {
-          debug_message += room_distance_chart [i] [j].ToString () + ", ";
+          debug_message += _room_distance_chart [i] [j].ToString () + ", ";
         }
         debug_message += "]";
         debug_message += "\nVISITED_COUNT " + visited.Count + ", ADJACENCIES: " + ROOMS [i].adjacent_rooms.Count;

@@ -2,8 +2,27 @@
 using System.Collections;
 
 public class Player : MonoBehaviour {
-  public static Player main;
+  public static Player INSTANCE;
   PlayerPhysicsController controller;
+
+  static LocationState _current_location_state;
+  public static LocationState CURRENT_LOCATION_STATE {
+    get {
+      return _current_location_state;
+    }
+  }
+  static LocationState _last_location_state;
+  public static LocationState LAST_LOCATION_STATE {
+    get {
+      return _last_location_state;
+    }
+  }
+
+  public static int CURRENT_OCCUPIED_ROOM {
+    get {
+      return _current_location_state.room_id;
+    }
+  }
 
   void InitializeComponents() {
     // Controller
@@ -13,13 +32,13 @@ public class Player : MonoBehaviour {
   }
 
   void Awake() {
-    main = this;
+    INSTANCE = this;
     InitializeComponents();
   }
 
 	// Use this for initialization
 	void Start () {
-	
+    _last_location_state = new LocationState ();
 	}
 	
 	// Update is called once per frame
@@ -27,16 +46,21 @@ public class Player : MonoBehaviour {
 	
 	}
 
-  public LocationState GetLocationState() {
-    LocationState state;
-    state.pos = transform.position;
-    state.facing = transform.rotation;
-    int room_id = GetRoomId ();
-    state.room_id = room_id;
-    DebugText.player_room_text = room_id.ToString () + " (" + Time.time.ToString("0") + ")";
-    PlayerStateHistory.current_occupied_room = room_id;
-    DebugLogging.PrintLocationState (state);
-    return state;
+  public void UpdateLocationState() {
+    LocationState new_state;
+    new_state.pos = transform.position;
+    new_state.facing = transform.rotation;
+    int new_room_id = GetRoomId ();
+    new_state.room_id = new_room_id;
+
+    _last_location_state = _current_location_state;
+    _current_location_state = new_state;
+
+    if (CURRENT_LOCATION_STATE.room_id != new_room_id) {
+      PlayerStateHistory.PlayerRoomChangeEvent ();
+    }
+      
+    DebugText.player_room_text = new_room_id.ToString () + " (" + Time.time.ToString("0") + ")";
   }
 
   int GetRoomId() {

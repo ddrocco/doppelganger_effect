@@ -2,7 +2,12 @@
 using System.Collections;
 
 public class MasterInit : MonoBehaviour {
-  static MasterInit _main;
+  static MasterInit _instance;
+  public static MasterInit INSTANCE {
+    get {
+      return _instance;
+    }
+  }
 
   /* List of Singletons:
    * MasterInit
@@ -19,14 +24,13 @@ public class MasterInit : MonoBehaviour {
     }
     if (!FindObjectOfType<PlayerStateHistory> ()) {
       Debug.Log ("You need to create a PlayerStateHistory object!");
-    } else if (!FindObjectOfType<PlayerStateHistory> ().ghost_prefab) {
-      Debug.Log ("You need to attach a Ghost Prefab object to PlayerStateHistory!");
+    } else if (!BuildingPrefabs.GHOST_PREFAB) {
+      Debug.Log ("You need to attach a Ghost Prefab object to BuildingPrefabs!");
     }
   }
 
   public void UpdateSingletons() {
-    _main = FindObjectOfType<MasterInit> ();
-    PlayerStateHistory._main = FindObjectOfType<PlayerStateHistory> ();
+    _instance = FindObjectOfType<MasterInit> ();
   }
 
   void Awake() {

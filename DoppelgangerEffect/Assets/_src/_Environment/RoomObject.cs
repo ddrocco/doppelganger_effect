@@ -54,5 +54,19 @@ public class RoomObject : MonoBehaviour {
     UpdateColorInRenderers();
   }
 
+  public RoomActivityState GetActivityState() {
+    return GetActivityState(id);
+  }
+
+  public static RoomActivityState GetActivityState (int room_id) {
+    RoomObject room = RoomCollection.ROOMS [room_id];
+    int distance = RoomCollection.ROOM_DISTANCE_CHART[Player.CURRENT_OCCUPIED_ROOM][room_id];
+    if (distance < Constants.ROOM_DISTANCE_TO_SLEEP) {
+      return RoomActivityState.ACTIVE;
+    } else {
+      return RoomActivityState.SLEEPING;
+    }
+  }
+
   /* DEBUG UTILITY */
 }
